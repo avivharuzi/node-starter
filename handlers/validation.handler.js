@@ -36,10 +36,14 @@ class ValidationHandler {
     }
 
     static testInput(data) {
-        data = data.trim();
-        data = ValidationHandler.stripslashes(data);
-        data = ValidationHandler.htmlspecialchars(data);
-        return data;
+        if (data.constructor !== String) {
+            return data;
+        } else {
+            data = data.trim();
+            data = ValidationHandler.stripslashes(data);
+            data = ValidationHandler.htmlspecialchars(data);
+            return data;
+        }
     }
 
     static stripslashes(str) {
