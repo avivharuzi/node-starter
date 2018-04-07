@@ -24,8 +24,10 @@ class PasswordHelper {
             bcrypt.compare(password, hashPassword, (err, isMatch) => {
                 if (err) {
                     reject(err);
-                } else {
+                } else if (isMatch) {
                     resolve(isMatch);
+                } else {
+                    reject();
                 }
             });
         });
