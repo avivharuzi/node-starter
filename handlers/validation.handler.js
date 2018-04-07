@@ -8,7 +8,7 @@ class ValidationHandler {
     }
 
     static regex(value, reg) {
-        if (value !== '') {
+        if (value) {
             if (reg.test(value)) {
                 return true;
             } else {
@@ -20,7 +20,7 @@ class ValidationHandler {
     }
 
     static isEmail(value) {
-        if (value !== '') {
+        if (value) {
             if (ValidationHandler.EMAIL_REGEX.test(value)) {
                 return true;
             } else {
@@ -36,7 +36,7 @@ class ValidationHandler {
     }
 
     static testInput(data) {
-        if (data.constructor !== String) {
+        if (!data || data.constructor !== String) {
             return data;
         } else {
             data = data.trim();
