@@ -19,7 +19,7 @@ class ValidationHandler {
         }
     }
 
-    static isEmail(value) {
+    static email(value) {
         if (value) {
             if (ValidationHandler.EMAIL_REGEX.test(value)) {
                 return true;
@@ -32,7 +32,7 @@ class ValidationHandler {
     }
 
     static checkScriptTag(str) {
-        return ValidationHandler.SCRIPT_REGEX.test(str);
+        return !ValidationHandler.SCRIPT_REGEX.test(str);
     }
 
     static testInput(data) {
@@ -88,6 +88,30 @@ class ValidationHandler {
             .replace(/\-\-+/g, "-")
             .replace(/^-+/, "")
             .replace(/-+$/, "");
+    }
+
+    static validateAll(params, obj) {
+        let errors = [];
+
+        for (let param of params) {
+            if (ValidationHandler[param.method](param.value, param.regex || null)) {
+                obj[param.name] = ValidationHandler.testInput(param.value);
+            } else {
+                errors.push(`${param.message}`);
+            }
+        }
+
+        if (errors.length) {
+            return {
+                response: false,
+                errors: errors
+            };
+        } else {
+            return {
+                response: true,
+                data: obj
+            }
+        }
     }
 }
 
