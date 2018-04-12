@@ -1,3 +1,5 @@
+const changeCase = require('change-case');
+
 class ValidationHandler {
 	static get EMAIL_REGEX() {
 		return /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
@@ -14,6 +16,14 @@ class ValidationHandler {
             } else {
                 return false;
             }
+        } else {
+            return false;
+        }
+    }
+
+    static isEmpty(value) {
+        if (value) {
+            return true;
         } else {
             return false;
         }
@@ -90,14 +100,14 @@ class ValidationHandler {
             .replace(/-+$/, "");
     }
 
-    validateAll(params, obj) {
+    static validateAll(obj, objSchema) {
         let errors = [];
 
-        for (let param of params) {
-            if (ValidationHandler[param.method](param.value, param.regex || null)) {
-                obj[param.name] = ValidationHandler.testInput(param.value);
+        for (let key in objSchema) {
+            if (ValidationHandler.regex(obj[key], objSchema[key])) {
+                obj[key] = ValidationHandler.testInput(obj[key]);
             } else {
-                errors.push(`${param.message}`);
+                errors.push(`This ${changeCase.noCase(key)} is invalid`);
             }
         }
 

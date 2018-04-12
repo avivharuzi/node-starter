@@ -1,5 +1,7 @@
 const models = require('./../models/index');
 
+const changeCase = require('change-case');
+
 class MongooseHandler {
     static find(model, query = {}, select = '') {
         return new Promise((resolve, reject) => {
@@ -30,7 +32,7 @@ class MongooseHandler {
             })
             .then((result) => {
                 if (result) {
-                    reject(`This ${field} is already in used`);
+                    reject(`This ${changeCase.noCase(field)} is already in used`);
                 } else {
                     resolve();
                 }
