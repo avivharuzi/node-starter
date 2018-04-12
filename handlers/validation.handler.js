@@ -19,7 +19,7 @@ class ValidationHandler {
         }
     }
 
-    static email(value) {
+    static isEmail(value) {
         if (value) {
             if (ValidationHandler.EMAIL_REGEX.test(value)) {
                 return true;
@@ -90,7 +90,7 @@ class ValidationHandler {
             .replace(/-+$/, "");
     }
 
-    static validateAll(params, obj) {
+    validateAll(params, obj) {
         let errors = [];
 
         for (let param of params) {
@@ -102,15 +102,9 @@ class ValidationHandler {
         }
 
         if (errors.length) {
-            return {
-                response: false,
-                errors: errors
-            };
+            return errors;
         } else {
-            return {
-                response: true,
-                data: obj
-            }
+            return obj;
         }
     }
 }

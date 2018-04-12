@@ -1,4 +1,5 @@
 const fs = require('fs');
+const zlib = require('zlib');
 
 class FileHandler {
     static checkFileType(file, type) {
@@ -14,19 +15,23 @@ class FileHandler {
                     break;
                 }
             default: {
-                    return false;
+                    break;
                 }
                 break;
         }
     
-        const fileExt = file.name.split('.');
-        const fileActualExt = fileExt[fileExt.length - 1].toLowerCase();
-        const mimetype = file.mimetype.toLowerCase();
-    
-        if (filetypes.test(fileActualExt) && filetypes.test(mimetype)) {
-            return true;
+        if (filetypes) {
+            const fileExt = file.name.split('.');
+            const fileActualExt = fileExt[fileExt.length - 1].toLowerCase();
+            const mimetype = file.mimetype.toLowerCase();
+        
+            if (filetypes.test(fileActualExt) && filetypes.test(mimetype)) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            return false;
+            return true;
         }
     }
 
@@ -129,6 +134,27 @@ class FileHandler {
         let name = file.substr(0, lastIndex);
 
         return name;
+    }
+
+    static convertFilesToGzip(dir) {
+        return new Promise((resolve, reject) => {
+            fs.readdir(dir, (err, files) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    files.forEach((file) => {
+                        const gzip = zlib.createGzip();
+    
+                        const inp = fs.createReadStream(dir + '/' + file);
+                        const out = fs.createWriteStream(dir + '/' + file + '.gz');
+                        
+                        inp.pipe(gzip).pipe(out);
+                    });
+
+                    resolve();
+                }
+            });
+        });
     }
 }
 
