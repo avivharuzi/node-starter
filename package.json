@@ -4,8 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon server.js"
   },
   "author": "Aviv Haruzi",
   "license": "MIT",
@@ -27,5 +26,8 @@
     "morgan": "^1.9.0",
     "nodemailer": "^4.6.4",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.4"
   }
 }
