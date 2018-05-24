@@ -1,2 +1,29 @@
-# node-starter
-node.js starter files
+# Node Starter
+
+> node.js starter files
+
+## .env
+
+PORT
+
+HOSTNAME
+
+IMAGES_PATH
+
+JWT_SECRET
+
+AWS_S3_ACCESS_KEY
+
+AWS_S3_SECRET_KEY
+
+AWS_S3_BUCKET_NAME
+
+BASE_RECAPTCHA_URL
+
+RECAPTCHA_SECRET_KEY
+
+EMAIL_HOST
+
+EMAIL_ADDRESS
+
+EMAIL_PASSWORD
