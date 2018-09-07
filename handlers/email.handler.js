@@ -6,9 +6,9 @@ class EmailHandler {
             // port: 465 secure: true
             // port: 587 secure: false
             const transporter = nodemailer.createTransport({
-                host: process.env.EMAIL_HOST,
+                host: process.env.EMAIL_HOSTNAME,
                 port: 465,
-                secure: true, 
+                secure: true,
                 auth: {
                     user: process.env.EMAIL_ADDRESS,
                     pass: process.env.EMAIL_PASSWORD
@@ -17,14 +17,14 @@ class EmailHandler {
                     rejectUnauthorized: false
                 }
             });
-        
+
             const mailOptions = {
                 from:`${from} <${process.env.EMAIL_ADDRESS}>`,
                 to: to,
                 subject: subject,
                 html: output
             };
-    
+
             transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
                     reject(['There was problem while sending this message']);

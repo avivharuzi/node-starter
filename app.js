@@ -10,7 +10,7 @@ const path = require('path');
 const compression = require('compression');
 
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://127.0.0.1:27017/<db-name>');
+mongoose.connect(`mongodb://${process.env.DB_HOSTNAME}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`);
 
 const app = express();
 
@@ -23,6 +23,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(fileUpload());
 
-app.use('/images', express.static(path.join(__dirname, 'public/images')));
+app.use('/images', express.static(path.join(__dirname, process.env.IMAGES_PATH)));
 
 module.exports = app;

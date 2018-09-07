@@ -2,7 +2,7 @@ const fs = require('fs');
 const zlib = require('zlib');
 
 class FileHandler {
-    static checkFileType(file, type) {
+    static hasFileType(file, type) {
         let filetypes;
 
         switch (type) {
@@ -19,12 +19,12 @@ class FileHandler {
                 }
                 break;
         }
-    
+
         if (filetypes) {
             const fileExt = file.name.split('.');
             const fileActualExt = fileExt[fileExt.length - 1].toLowerCase();
             const mimetype = file.mimetype.toLowerCase();
-        
+
             if (filetypes.test(fileActualExt) && filetypes.test(mimetype)) {
                 return true;
             } else {
@@ -35,10 +35,10 @@ class FileHandler {
         }
     }
 
-    static checkFileSize(file, size) {
+    static hasFileSize(file, size) {
         const maxSize = size * 1000000;
         const fileSize = file.data.toString().length;
-    
+
         if (fileSize < maxSize) {
             return true;
         } else {
@@ -46,7 +46,7 @@ class FileHandler {
         }
     }
 
-    static checkFilesErrors(files, type, size) {
+    static validateFiles(files, type, size) {
         return new Promise((resolve, reject) => {
             let errors = [];
 
@@ -56,11 +56,11 @@ class FileHandler {
                 }
 
                 for (let file of files) {
-                    if (!FileHandler.checkFileType(file, type)) {
+                    if (!FileHandler.hasFileType(file, type)) {
                         errors.push(`File ${file.name} type is not supported`);
                     }
-        
-                    if (!FileHandler.checkFileSize(file, size)) {
+
+                    if (!FileHandler.hasFileSize(file, size)) {
                         errors.push(`File ${file.name} is too big`);
                     }
                 }
@@ -84,13 +84,13 @@ class FileHandler {
             if (files.constructor !== Array) {
                 files = [files];
             }
-    
+
             for (let file of files) {
                 const fileExt = file.name.split('.');
                 const fileActualExt = fileExt[fileExt.length - 1];
                 const uid = Date.now() + i;
                 const newFileName = uid + '.' + fileActualExt;
-    
+
                 file.mv(path + '/' + newFileName, (err) => {
                     if (err) {
                         reject(err);
@@ -144,10 +144,10 @@ class FileHandler {
                 } else {
                     files.forEach((file) => {
                         const gzip = zlib.createGzip();
-    
+
                         const inp = fs.createReadStream(dir + '/' + file);
                         const out = fs.createWriteStream(dir + '/' + file + '.gz');
-                        
+
                         inp.pipe(gzip).pipe(out);
                     });
 
