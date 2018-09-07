@@ -1,19 +1,25 @@
+const STATUS_CODE_OK = 200;
+
 class RouteHandler {
-    static error(res, status, msg, errors = []) {
+    base(res, success, error, status, message, errors, data) {
         res.status(status);
+
         res.send({
-            response: false,
-            message: msg,
-            errors: errors
+            success: success,
+            error: error,
+            status: status,
+            message: message,
+            errors: errors,
+            data: data
         });
     }
 
-    static success(res, msg, data = []) {
-        res.send({
-            response: true,
-            message: msg,
-            data: data
-        });
+    static success(res, data = null, message = null) {
+        RouteHandler.base(res, true, false, STATUS_CODE_OK, message, null, data);
+    }
+
+    static error(res, status, errors = null, message = null) {
+        RouteHandler.base(res, false, true, status, message, errors, null);
     }
 }
 
