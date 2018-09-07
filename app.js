@@ -8,6 +8,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const path = require('path');
 const compression = require('compression');
+const serveStatic = require('serve-static');
 
 mongoose.Promise = require('bluebird');
 mongoose.connect(`mongodb://${process.env.DB_HOSTNAME}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`);
@@ -23,6 +24,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(fileUpload());
 
-app.use('/images', express.static(path.join(__dirname, process.env.IMAGES_PATH)));
+app.use('/images', serveStatic(path.join(__dirname, process.env.IMAGES_PATH)));
 
 module.exports = app;
