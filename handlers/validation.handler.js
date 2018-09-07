@@ -9,7 +9,7 @@ class ValidationHandler {
 		return /<script[^>]*>(.*?)<\/script[^>]*>|<javascript[^>]*>(.*?)<\/javascript[^>]*>/;
     }
 
-    static regex(value, reg) {
+    static hasRegexMatch(value, reg) {
         if (value) {
             if (reg.test(value)) {
                 return true;
@@ -41,8 +41,8 @@ class ValidationHandler {
         }
     }
 
-    static checkScriptTag(str) {
-        return !ValidationHandler.SCRIPT_REGEX.test(str);
+    static hasScriptTag(str) {
+        return ValidationHandler.SCRIPT_REGEX.test(str);
     }
 
     static testInput(data) {
@@ -84,7 +84,7 @@ class ValidationHandler {
             '&quot;': '"',
             '&#039;': "'"
         };
-    
+
         return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, (m) => MAP[m]);
     }
 
