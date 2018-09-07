@@ -1,7 +1,7 @@
 const STATUS_CODE_OK = 200;
 
 class RouteHandler {
-    base(res, success, error, status, message, errors, data) {
+    static base(res, success, error, status, message, errors, data) {
         res.status(status);
 
         res.send({
