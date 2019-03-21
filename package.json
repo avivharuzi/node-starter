@@ -6,8 +6,8 @@
   "scripts": {
     "cluster": "nodemon cluster.js",
     "start": "nodemon server.js",
-    "dev": "cross-env NODE_ENV=development && npm start",
-    "prod": "cross-env NODE_ENV=production && npm start",
+    "dev": "cross-env NODE_ENV=development \"npm start\"",
+    "prod": "cross-env NODE_ENV=production \"npm start\"",
     "pm2:start": "pm2 start npm --name=server -- start",
     "pm2:stop": "pm2 stop server",
     "pm2:destroy": "pm2 delete server"
