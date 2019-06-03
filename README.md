@@ -1,3 +1,3 @@
 # Node Starter
 
-> node.js starter files
+Node.js starter project files.
